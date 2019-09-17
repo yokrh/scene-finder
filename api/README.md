@@ -7,6 +7,12 @@ http://localhost:3000/ytdl/download?url=https://www.youtube.com/watch?v=kjETQaKL
 
 ### Dev on local
 
+#### python env
+
+See api/app/static/bin/opencv/setup.sh
+
+#### run server
+
 ```sh
 npm run dev
 ```

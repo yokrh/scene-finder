@@ -1,0 +1,3 @@
+.serverless/
+static/bin/opencv/cv2/
+static/bin/opencv/numpy/
