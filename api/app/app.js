@@ -72,6 +72,13 @@ router.get('/find', async (req, res) => {
   const trim_scene_bottom = 0.95;
   const trim_scene_left = 0.15;
   const trim_scene_right = 0.85;
+  const mask_background_color = 255;
+  const mask_hsv_min_h = 0;
+  const mask_hsv_min_s = 0;
+  const mask_hsv_min_v = 50; //0, 50;
+  const mask_hsv_max_h = 255; //0, 255;
+  const mask_hsv_max_s = 255; //0, 255;
+  const mask_hsv_max_v = 255; //160, 255;
 
   /*
   // Load a video
@@ -186,7 +193,32 @@ router.get('/find', async (req, res) => {
     console.log('catch Error:', error);
     return res.send('catch Error');
   });
+
   // mask scenes
+  console.log("\n### mask scenes");
+  await new Promise((resolve, reject) => {
+    console.log('=== exec begin ===');
+    const COMMAND = `python static/bin/opencv/mask_scene.py ${mask_background_color}`
+      + ` ${mask_hsv_min_h} ${mask_hsv_min_s} ${mask_hsv_min_v}`
+      + ` ${mask_hsv_max_h} ${mask_hsv_max_s} ${mask_hsv_max_v}`;
+    exec(COMMAND, (error, stdout, stderr) => {
+      console.log('=== exec done ===');
+      console.log('stdout', stdout);
+      if (error) {
+        const msg = `Exec error: ${error}`;
+        throw Error(msg);
+      }
+      if (stderr) {
+        const msg = `Exec stderr: ${stderr}`;
+        throw Error(msg);
+      }
+      resolve();
+    });
+  })
+  .catch((error) => {
+    console.log('catch Error:', error);
+    return res.send('catch Error');
+  });
 
   // scene ocr
 
