@@ -65,25 +65,29 @@ router.get('/ytdl/download', cors(), (req, res) => {
 router.get('/find', async (req, res) => {
   console.log("\n/find")
   const video = 'video_luna.mp4';
-  const image = 'video_luna.mp4_1002000.png';
+  const image = 'out_10000000.png';
   const bucket = 'scene-finder';
-  const similarity_border = 0.997;
+  const similarity_border = 0.95;
+  const trim_scene_top = 0.75;
+  const trim_scene_bottom = 0.95;
+  const trim_scene_left = 0.15;
+  const trim_scene_right = 0.85;
 
   /*
   // Load a video
-  console.log("\n### Load a video");
-  const s3videoObject = await s3.getObject({
-    Bucket: bucket,
-    Key: video,
-  })
-  .promise()
-  .catch((error) => {
-    console.log('catch Error:', error);
-    return res.send('catch Error');
-  });
-  console.log(s3videoObject);
-  console.log(s3videoObject.Body);
-  console.log(s3videoObject.Body.length);
+  // console.log("\n### Load a video");
+  // const s3videoObject = await s3.getObject({
+  //   Bucket: bucket,
+  //   Key: video,
+  // })
+  // .promise()
+  // .catch((error) => {
+  //   console.log('catch Error:', error);
+  //   return res.send('catch Error');
+  // });
+  // console.log(s3videoObject);
+  // console.log(s3videoObject.Body);
+  // console.log(s3videoObject.Body.length);
 
   // capture frame
   console.log("\n### capture frame");
@@ -128,18 +132,18 @@ router.get('/find', async (req, res) => {
   console.log(s3imageObject);
   console.log(s3imageObject.Body);
   console.log(s3imageObject.Body.length);
-  */
+  // */
 
   // find similar scenes
   console.log("\n### find similar scenes");
   await new Promise((resolve, reject) => {
     // Write an image
-    // const imageFilePath = `static/data/${image}`;
-    // fs.writeFileSync(imageFilePath, s3imageObject.Body);
+    const imageFilePath = `static/data/${image}`;
+    fs.writeFileSync(imageFilePath, s3imageObject.Body);
 
     // capture video frames
     console.log('=== exec begin ===');
-    const COMMAND = `python static/bin/opencv/find_similar_scenes.py ${image} ${similarity_border}`;
+    const COMMAND = `python static/bin/opencv/find_similar_scene.py ${image} ${similarity_border}`;
     exec(COMMAND, (error, stdout, stderr) => {
       console.log('=== exec done ===');
       console.log('stdout', stdout);
@@ -159,8 +163,34 @@ router.get('/find', async (req, res) => {
     return res.send('catch Error');
   });
 
-  //
-  res.send('done');
+  // trim scenes
+  console.log("\n### trim scenes");
+  await new Promise((resolve, reject) => {
+    console.log('=== exec begin ===');
+    const COMMAND = `python static/bin/opencv/trim_scene.py ${trim_scene_top} ${trim_scene_bottom} ${trim_scene_left} ${trim_scene_right}`;
+    exec(COMMAND, (error, stdout, stderr) => {
+      console.log('=== exec done ===');
+      console.log('stdout', stdout);
+      if (error) {
+        const msg = `Exec error: ${error}`;
+        throw Error(msg);
+      }
+      if (stderr) {
+        const msg = `Exec stderr: ${stderr}`;
+        throw Error(msg);
+      }
+      resolve();
+    });
+  })
+  .catch((error) => {
+    console.log('catch Error:', error);
+    return res.send('catch Error');
+  });
+  // mask scenes
+
+  // scene ocr
+
+  // res.send('done');
 });
 
 app.use('/', router);
