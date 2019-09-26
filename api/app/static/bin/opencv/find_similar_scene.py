@@ -2,9 +2,9 @@
 
 import sys
 import os
+import glob
 import cv2
 import numpy as np
-import glob
 
 
 dir_path = os.path.dirname(os.path.realpath(__file__)) + '/'

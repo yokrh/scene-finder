@@ -2,8 +2,8 @@
 
 import sys
 import os
-import cv2
 import glob
+import cv2
 
 dir_path = os.path.dirname(os.path.realpath(__file__)) + '/'
 print(dir_path)

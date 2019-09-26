@@ -29,6 +29,7 @@ package:
   include:
     node_modules/**
     static/**
+    model/**
     index.js
     app.js
   exclude:
