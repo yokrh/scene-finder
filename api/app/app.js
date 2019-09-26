@@ -53,20 +53,21 @@ router.get('/ytdl/download', cors(), (req, res) => {
 router.get('/find', async (req, res) => {
   console.log("\n/find")
   const video = 'video_luna.mp4';
-  const image = 'out_10000000.png';
+  const image = 'out_10001200.png';
   const bucket = 'scene-finder';
-  const similarity_border = 0.98;
-  const trim_scene_top = 0.75;
-  const trim_scene_bottom = 0.95;
-  const trim_scene_left = 0.15;
-  const trim_scene_right = 0.85;
-  const mask_background_color = 255;
+  const similarity_border = 0.995;
+  const trim_scene_top = 0.33;
+  const trim_scene_bottom = 0.66;
+  const trim_scene_left = 0.05;
+  const trim_scene_right = 0.95;
+  const mask_background_color = 255;  // 0:black ([0,0,0]-[0,0,160]), 255:white ([0,0,50]-[255,255,255])
   const mask_hsv_min_h = 0;
   const mask_hsv_min_s = 0;
-  const mask_hsv_min_v = 50; //0, 50;
-  const mask_hsv_max_h = 255; //0, 255;
-  const mask_hsv_max_s = 255; //0, 255;
-  const mask_hsv_max_v = 255; //160, 255;
+  const mask_hsv_min_v = 50;
+  const mask_hsv_max_h = 255;
+  const mask_hsv_max_s = 255;
+  const mask_hsv_max_v = 255;
+  const ocr_language = 'jpn';
 
   /*
 
@@ -80,9 +81,6 @@ router.get('/find', async (req, res) => {
     const videoFilePath = `static/data/${video}`;
     fs.writeFileSync(videoFilePath, s3videoObject.Body);
   }
-
-
-  // */
 
   // capture frame frames
   console.log("\n### capture frame");
@@ -105,6 +103,8 @@ router.get('/find', async (req, res) => {
     const imageFilePath = `static/data/${image}`;
     fs.writeFileSync(imageFilePath, s3imageObject.Body);
   }
+
+  // */
 
   // find similar scenes
   console.log("\n### find similar scenes");
@@ -142,6 +142,15 @@ router.get('/find', async (req, res) => {
   }
 
   // scene ocr
+  console.log("\n### scene ocr");
+  {
+    const command = `python static/bin/opencv/scene_ocr.py ${ocr_language}`;
+    await PythonExecHelper.getPythonExecPromise(command)
+      .catch((error) => {
+        console.log('catch Error:', error);
+        return res.send('catch Error');
+      });
+  }
 
   // res.send('done');
 });
