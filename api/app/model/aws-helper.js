@@ -1,6 +1,6 @@
 'use strict';
 
-// const AWS = require('aws-sdk');
+//const AWS = require('aws-sdk');
 //const cognitoidentity = require('aws-sdk/clients/cognitoidentity');
 const awsSdkClientS3 = require('aws-sdk/clients/s3');  // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
 
@@ -13,6 +13,9 @@ const s3 = new awsSdkClientS3({
   region,
 });
 
+/**
+ * S3 Helper.
+ */
 class S3 {
   static getObject(bucket, key) {
     return s3.getObject({
@@ -30,5 +33,4 @@ class S3 {
 const AwsHelper = {
   S3,
 };
-
 module.exports = AwsHelper;

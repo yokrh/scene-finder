@@ -50,13 +50,14 @@ based_frame_image_file = dir_path + '../../data/' + image_file_name
 frame_image_dir = dir_path + '../../out/frame/'
 target_frame_image_dir = dir_path + '../../out/target_frame/'
 
+print('--- process begin ---')
 image_files = glob.glob(frame_image_dir + '*.png')
-print('file length: ')
-print(len(image_files))
-similar_image_files = filter_similar_image_files(based_frame_image_file, image_files, similarity_border)
+print('file length: ' + str(len(image_files)))
 
+similar_image_files = filter_similar_image_files(based_frame_image_file, image_files, similarity_border)
 for file in similar_image_files:
     print(file)
     img = cv2.imread(file, 1)
     new_file = file.replace(frame_image_dir, target_frame_image_dir)
     cv2.imwrite(new_file, img)
+print('--- process end ---')

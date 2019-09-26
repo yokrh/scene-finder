@@ -32,10 +32,12 @@ def trim_image(img, h_begin=0.1, h_end=0.2, w_begin=0, w_end=1):
 target_frame_image_dir = dir_path + '../../out/target_frame/'
 trimmed_image_dir = dir_path + '../../out/trimmed/'
 
+print('--- process begin ---')
 image_files = glob.glob(target_frame_image_dir + '*.png')
-print('file length: ')
-print(len(image_files))
+print('file length: ' + str(len(image_files)))
+
 for file in image_files:
     img = cv2.imread(file, 0)
     img = trim_image(img, top, bottom, left, right)
     cv2.imwrite(file.replace(target_frame_image_dir, trimmed_image_dir), img)
+print('--- process end ---')

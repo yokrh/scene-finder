@@ -61,7 +61,10 @@ def reverse_black_and_white(img):
 trimmed_image_dir = dir_path + '../../out/trimmed/'
 ocr_image_dir = dir_path + '../../out/ocr/'
 
+print('--- process begin ---')
 image_files = glob.glob(trimmed_image_dir + '*.png')
+print('file length: ' + str(len(image_files)))
+
 for file in image_files:
     img = cv2.imread(file, 1)
     img = mask_to_color(img, background_color, hsv_min, hsv_max)
@@ -69,3 +72,4 @@ for file in image_files:
     if reverse_color_flg:
         img = reverse_black_and_white(img)
     cv2.imwrite(file.replace(trimmed_image_dir, ocr_image_dir), img)
+print('--- process end ---')

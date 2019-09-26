@@ -43,9 +43,10 @@ def capture_video_frame(video_file = 'video',
 video_file = dir_path + '../../data/' + video_file_name
 frame_image_dir = dir_path + '../../out/frame/'
 frame_image_file_prefix = video_file_name + '_'
+
+print('--- process begin ---')
 print(video_file)
 print(frame_image_dir)
 
-print('--- process begin ---')
 capture_video_frame(video_file, frame_image_dir, frame_image_file_prefix)
 print('--- process end ---')

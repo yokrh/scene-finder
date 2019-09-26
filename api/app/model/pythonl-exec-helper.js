@@ -3,20 +3,19 @@
 const childProcess = require('child_process');
 const exec = childProcess.exec;
 
+/**
+ * Python script execution process helper.
+ */
 class PythonExecHelper {
   static getPythonExecPromise(command) {
     return new Promise((resolve, reject) => {
-      console.log('=== exec begin ===');
       exec(command, (error, stdout, stderr) => {
-        console.log('=== exec done ===');
         console.log('stdout', stdout);
         if (error) {
-          const msg = `Exec error: ${error}`;
-          throw Error(msg);
+          throw Error(`Exec error: ${error}`);
         }
         if (stderr) {
-          const msg = `Exec stderr: ${stderr}`;
-          throw Error(msg);
+          throw Error(`Exec stderr: ${stderr}`);
         }
         resolve();
       });

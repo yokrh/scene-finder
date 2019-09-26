@@ -26,8 +26,7 @@ def check_ocr_env():
     print("Will use tool '%s'" % (tool.get_name()))
     langs = tool.get_available_languages()
     print("Available languages: %s" % ", ".join(langs))
-    print()
-    
+
     return tool
 ''''''
 ''''''
@@ -42,7 +41,9 @@ def conv_to_nparray(im_pil):
 tool = check_ocr_env()
 ocr_image_dir = dir_path + '../../out/ocr/'
 
+print('--- process begin ---')
 image_files = glob.glob(ocr_image_dir + '*.png')
+print('file length: ' + str(len(image_files)))
 for file in image_files:
     img = cv2.imread(file, 1)
     txt = tool.image_to_string(
@@ -51,6 +52,7 @@ for file in image_files:
         builder=pyocr.builders.TextBuilder(tesseract_layout=6)
     )
     print(file, txt)
+print('--- process end ---')
 
 
 # [TODO]: return array of image frame time in the movie
