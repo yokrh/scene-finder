@@ -17,7 +17,7 @@ class PythonExecHelper {
         if (stderr) {
           throw Error(`Exec stderr: ${stderr}`);
         }
-        resolve();
+        resolve(stdout);
       });
     });
   }

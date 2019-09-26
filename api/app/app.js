@@ -145,11 +145,17 @@ router.get('/find', async (req, res) => {
   console.log("\n### scene ocr");
   {
     const command = `python static/bin/opencv/scene_ocr.py ${ocr_language}`;
-    await PythonExecHelper.getPythonExecPromise(command)
+    const ocrResult = await PythonExecHelper.getPythonExecPromise(command)
       .catch((error) => {
         console.log('catch Error:', error);
         return res.send('catch Error');
       });
+
+    const json = JSON.parse(ocrResult);
+    for (let k of Object.keys(json)) {
+      const v = json[k];
+      console.log(k, v);
+    }
   }
 
   // res.send('done');
