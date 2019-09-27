@@ -54,7 +54,6 @@ router.get('/find', async (req, res) => {
   console.log("\n/find")
   const video = 'video_luna.mp4';
   const image = 'out_10001200.png';
-  const bucket = 'scene-finder';
   const similarity_border = 0.995;
   const trim_scene_top = 0.33;
   const trim_scene_bottom = 0.66;
@@ -69,12 +68,10 @@ router.get('/find', async (req, res) => {
   const mask_hsv_max_v = 255;
   const ocr_language = 'jpn';
 
-  /*
-
   // Load a video
   console.log("\n### Load a video");
   {
-    const s3videoObject = await AwsHelper.S3.getObject(bucket, video);
+    const s3videoObject = await AwsHelper.S3.getObject(video);
     console.log(s3videoObject, s3videoObject.Body, s3videoObject.Body.length);
 
     // Write a video
@@ -96,15 +93,13 @@ router.get('/find', async (req, res) => {
   // Load an image
   console.log("\n### Load an image");
   {
-    const s3imageObject = await AwsHelper.S3.getObject(bucket, image);
+    const s3imageObject = await AwsHelper.S3.getObject(image);
     console.log(s3imageObject, s3imageObject.Body, s3imageObject.Body.length);
 
     // Write an image
     const imageFilePath = `static/data/${image}`;
     fs.writeFileSync(imageFilePath, s3imageObject.Body);
   }
-
-  // */
 
   // find similar scenes
   console.log("\n### find similar scenes");
@@ -151,14 +146,11 @@ router.get('/find', async (req, res) => {
         return res.send('catch Error');
       });
 
-    const json = JSON.parse(ocrResult);
-    for (let k of Object.keys(json)) {
-      const v = json[k];
-      console.log(k, v);
-    }
+    const sceneOcrMap = JSON.parse(ocrResult);
+    //for (let k of Object.keys(json)) console.log(k, json[k]);
   }
 
-  // res.send('done');
+  res.send('done');
 });
 
 app.use('/', router);

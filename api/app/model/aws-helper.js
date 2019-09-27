@@ -7,6 +7,7 @@ const awsSdkClientS3 = require('aws-sdk/clients/s3');  // https://docs.aws.amazo
 const accessKeyId = 'AKIARS7BSK62RUM2RUGZ';
 const secretAccessKey = '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';
 const region = 'ap-northeast-1';
+const bucket = 'scene-finder';
 const s3 = new awsSdkClientS3({
   accessKeyId,
   secretAccessKey,
@@ -17,7 +18,7 @@ const s3 = new awsSdkClientS3({
  * S3 Helper.
  */
 class S3 {
-  static getObject(bucket, key) {
+  static getObject(key) {
     return s3.getObject({
       Bucket: bucket,
       Key: key,
