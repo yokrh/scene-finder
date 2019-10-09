@@ -1,0 +1,30 @@
+{
+  "name": "scene-finder-storage-api",
+  "version": "1.0.0",
+  "description": "scene finder storage api",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx serverless offline",
+    "sls:create_domain": "npx serverless create_domain",
+    "sls:delete_domain": "npx serverless delete_domain",
+    "sls:package": "npx serverless package",
+    "sls:deploy": "npx serverless deploy",
+    "sls:remove": "npx serverless remove",
+    "sls:info": "npx serverless info",
+    "sls:log": "npx serverless logs -f fc-index"
+  },
+  "author": "yoshitake-okada",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^1.54.0",
+    "serverless-domain-manager": "^3.3.0",
+    "serverless-offline": "^5.12.0"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.545.0",
+    "aws-serverless-express": "^3.3.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "ytdl-core": "^1.0.0"
+  }
+}
