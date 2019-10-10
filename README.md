@@ -1,0 +1,3 @@
+今回やりたいことをlambdaで実現するのは容量的にきついので、終わり。
+あと、serverlessのpackageのexcludeがうまくいかなくて飽きた
+
