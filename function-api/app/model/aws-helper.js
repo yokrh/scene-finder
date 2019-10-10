@@ -4,8 +4,8 @@
 //const cognitoidentity = require('aws-sdk/clients/cognitoidentity');
 const awsSdkClientS3 = require('aws-sdk/clients/s3');  // https://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getObject-property
 
-const accessKeyId = 'AKIARS7BSK62VVNYXYNR';  // need to move
-const secretAccessKey = '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';  // need to move
+const accessKeyId = 'AKIARS7BSK62VVNYXYNR';  // new IAM one. Need to move in prod
+const secretAccessKey = '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';  // new IAM one. Need to move in prod
 const region = 'ap-northeast-1';
 const bucket = 'scene-finder';
 const s3 = new awsSdkClientS3({
