@@ -4,3 +4,6 @@
 一応メモ。
 aws-helper.js内のクレデンシャルはtfで作ったIAMのもので、削除済みなので問題ない。
 あと、ローカルのprofile（~/.aws/credentials）の同じ内容の該当箇所も削除済み。
+
+前身
+https://github.com/yokrh/scene-finder_0
